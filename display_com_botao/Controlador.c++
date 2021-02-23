@@ -1,17 +1,19 @@
 //Projeto Tinkercad -->
 // https://www.tinkercad.com/things/7GGZk44YgRG-powerful-luulia-lahdi/editel?sharecode=yqvLwwuCXaqpuw9K1O4pMMHS0mUJcXfyFkSOJfa-5nU
+//Ps: Para o botão funcionar aperte e segure um pouquinho!
 
-int bot = 8;
-int valor_bot;
-int i;
-int on;
+int bot = 8;   //Pino do botão
+int valor_bot; //Leitura do estado do botão
+int i;         //Contador
+int on;        //Verificador de ativação ou não do display
 char a = LOW;
 char b = HIGH;
+//"Valor_bot" recebe se o botão está sendo clicado ou não, enquanto "On" permite a ativação da contagem ou desativação dependendo do valor_bot
 
 void setup()
 {
-    Serial.begin(9600);
-    pinMode(bot, INPUT);
+    Serial.begin(9600);  //Inicialização do Monitor Serial
+    pinMode(bot, INPUT); //Botão é uma entrada
     pinMode(2, OUTPUT);
     pinMode(3, OUTPUT);
     pinMode(9, OUTPUT);
@@ -23,34 +25,34 @@ void setup()
 
 void loop()
 {
-    digitalWrite(2, a);
+    digitalWrite(2, a); //Reseta o Display
     digitalWrite(3, a);
     digitalWrite(9, a);
     digitalWrite(10, a);
     digitalWrite(11, a);
     digitalWrite(4, a);
     digitalWrite(5, a);
-    valor_bot = digitalRead(bot);
-    Serial.println(valor_bot);
+    valor_bot = digitalRead(bot); //Recebe o estado do botão (Quando desativado == 0)
+    Serial.println(valor_bot);    //Informa no monitor
     if (valor_bot == 1)
-    { //Verificação para ativar o display
-        if (on == 1)
+    {                //Verificação para ativar o display
+        if (on == 1) //Diz que o display deve ser desativado pois ele ja estava ativado
         {
             on = 0;
         }
-        else
+        else //Diz que o display deve ser ativado
         {
             on = 1;
         }
     }
     Serial.print("Botao:");
     Serial.println(on);
-    i = 0;
+    i = 0; // Reseta contagem
     while ((valor_bot == 0) && (i < 11) && (on == 1))
-    { // Liga o contador
-        i += 1;
+    {           // Liga o contador
+        i += 1; //i define a quantidade de números a serem mostrados por segundo
         Serial.println("Contando");
-        valor_bot = digitalRead(bot);
+        valor_bot = digitalRead(bot); //Recebe o valor do botão para saber se precisa desativar o display
         Serial.println(valor_bot);
         if (valor_bot == 1)
         { //Verifica se o botão foi apertado e para o while
